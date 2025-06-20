@@ -1,0 +1,40 @@
+{
+  "name": "car-tracker",
+  "version": "0.0.1",
+  "main": "index.js",
+  "private": true,  
+  "workspaces": [
+    "client",
+    "server",
+    "tests-e2e",
+    "packages/*"
+  ],
+  "scripts": {
+    "build:client": "npm run build -w client",
+    "build:server": "npm run build -w server",
+    "build:drizzle": "npm run build -w packages/drizzle",
+    "build:zod": "npm run build -w packages/zod",
+    "build": "npm-run-all build:*",
+    "dev:client": "npm run dev -w client",
+    "dev:server": "npm run dev -w server",
+    "dev": "npm-run-all --parallel dev:*",
+    "push": "npm run push -w packages/drizzle",
+    "seed": "npm run seed -w packages/drizzle",
+    "start:client": "npm run start -w client",
+    "start:server": "npm run start -w server",
+    "start": "npm-run-all --parallel start:*",
+    "test": "npm run test -w tests-e2e",
+    "clean": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && find . -name 'package-lock.json' -type f -delete && find . -name 'yarn.lock' -type f -delete && find . -name 'dist' -type d -prune -exec rm -rf '{}' +"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "drizzle-orm": "^0.44.2"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "wait-port": "^1.1.0"
+  }
+}
