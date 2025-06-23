@@ -2,6 +2,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AppLayout from "../layout/AppLayout";
 import { createRootRoute } from "@tanstack/react-router";
+import ErrorBoundary from "../components/ErrorBoundary";
 
 function makeQueryClient() {
   return new QueryClient({
@@ -42,7 +43,9 @@ function RootComponent() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <AppLayout />
+        <ErrorBoundary>
+          <AppLayout />
+        </ErrorBoundary>
       </QueryClientProvider>
       <TanStackRouterDevtools position="bottom-right" />
     </>
