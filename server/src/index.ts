@@ -30,10 +30,13 @@ const start = async () => {
       trpcOptions: {
         router: appRouter,
         createContext,
+        onError({ path, error }) {
+          console.error(`Error in tRPC handler on path '${path}':`, error);
+        },
       } as FastifyTRPCPluginOptions<AppRouter>["trpcOptions"],
     });
 
-    const port = Number(process.env.PORT) || 3100;
+    const port = Number(process.env.PORT) || 2022;
     await fastify.listen({
       port,
       host: "0.0.0.0",

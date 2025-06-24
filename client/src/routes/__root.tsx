@@ -3,6 +3,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AppLayout from "../layout/AppLayout";
 import { createRootRoute } from "@tanstack/react-router";
 import ErrorBoundary from "../components/ErrorBoundary";
+import { useState } from "react";
+import { createTRPCClient, httpBatchLink } from "@trpc/client";
+import type { AppRouter } from "../../../server/src/routes";
+import { TRPCProvider } from "../lib/trpc";
 
 function makeQueryClient() {
   return new QueryClient({
@@ -38,14 +42,32 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
+  const backendUrl = import.meta.env.VITE_URL_BACKEND;
   const queryClient = getQueryClient();
+  const [trpcClient] = useState(() =>
+    createTRPCClient<AppRouter>({
+      links: [
+        httpBatchLink({
+          url: backendUrl,
+          fetch(url, options) {
+            return fetch(url, {
+              ...options,
+              credentials: "include",
+            });
+          },
+        }),
+      ],
+    }),
+  );
 
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <ErrorBoundary>
-          <AppLayout />
-        </ErrorBoundary>
+        <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
+          <ErrorBoundary>
+            <AppLayout />
+          </ErrorBoundary>
+        </TRPCProvider>
       </QueryClientProvider>
       <TanStackRouterDevtools position="bottom-right" />
     </>
