@@ -21,10 +21,12 @@
     "better-auth": "^1.2.9",
     "dotenv": "^16.5.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.5.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@tanstack/react-query-devtools": "^5.81.2",
     "@tanstack/router-plugin": "^1.121.34",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",

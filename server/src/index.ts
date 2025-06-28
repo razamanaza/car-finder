@@ -26,7 +26,7 @@ const start = async () => {
     });
 
     await fastify.register(fastifyTRPCPlugin, {
-      prefix: "/",
+      prefix: "/trpc",
       trpcOptions: {
         router: appRouter,
         createContext,

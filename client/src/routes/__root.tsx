@@ -1,75 +1,45 @@
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AppLayout from "../layout/AppLayout";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRoute } from "@tanstack/react-router";
-import ErrorBoundary from "../components/ErrorBoundary";
-import { useState } from "react";
-import { createTRPCClient, httpBatchLink } from "@trpc/client";
-import type { AppRouter } from "../../../server/src/routes";
-import { TRPCProvider } from "../lib/trpc";
+import { Toaster } from "react-hot-toast";
+import AppLayout from "@/layout/AppLayout";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { Providers } from "@/components/Providers";
 
-function makeQueryClient() {
-  return new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 60 * 1000,
-        refetchOnWindowFocus: false,
-        retry: false,
-        gcTime: 1000 * 60 * 60 * 24 * 7,
-      },
-    },
-  });
-}
+function RootComponent() {
+  const isDev = import.meta.env.DEV;
 
-let browserQueryClient: QueryClient | undefined = undefined;
+  return (
+    <>
+      <Providers>
+        <ErrorBoundary>
+          <AppLayout />
+        </ErrorBoundary>
+        {isDev && <ReactQueryDevtools initialIsOpen={false} position="left" buttonPosition="bottom-left" />}
+      </Providers>
 
-function getQueryClient() {
-  if (typeof window === "undefined") {
-    // Server: always make a new query client
-    return makeQueryClient();
-  } else {
-    // Browser: make a new query client if we don't already have one
-    // This is very important, so we don't re-make a new client if React
-    // suspends during the initial render. This may not be needed if we
-    // have a suspense boundary BELOW the creation of the query client
-    if (!browserQueryClient) browserQueryClient = makeQueryClient();
-    return browserQueryClient;
-  }
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+        }}
+      />
+
+      {isDev && (
+        <TanStackRouterDevtools
+          position="bottom-right"
+          toggleButtonProps={{
+            style: {
+              marginLeft: "auto",
+              marginRight: "10px",
+            },
+          }}
+        />
+      )}
+    </>
+  );
 }
 
 export const Route = createRootRoute({
   component: RootComponent,
 });
-
-function RootComponent() {
-  const backendUrl = import.meta.env.VITE_URL_BACKEND;
-  const queryClient = getQueryClient();
-  const [trpcClient] = useState(() =>
-    createTRPCClient<AppRouter>({
-      links: [
-        httpBatchLink({
-          url: backendUrl,
-          fetch(url, options) {
-            return fetch(url, {
-              ...options,
-              credentials: "include",
-            });
-          },
-        }),
-      ],
-    }),
-  );
-
-  return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
-          <ErrorBoundary>
-            <AppLayout />
-          </ErrorBoundary>
-        </TRPCProvider>
-      </QueryClientProvider>
-      <TanStackRouterDevtools position="bottom-right" />
-    </>
-  );
-}

@@ -3,16 +3,21 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import dotenv from "dotenv";
+import path from "path";
 dotenv.config({ path: "client.env" });
-
-const backendUrl = process.env.VITE_URL_BACKEND;
 
 export default defineConfig({
   preview: {
-    port: 3000,
+    port: 4000,
   },
   server: {
-    port: 3000,
+    port: 4000,
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@server": path.resolve(__dirname, "../server/src"),
+    },
   },
   plugins: [
     tanstackRouter({

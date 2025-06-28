@@ -1,11 +1,11 @@
-import { CreateFastifyContextOptions } from "@trpc/server/adapters/fastify";
-import { drizzleOrm_NodePostgres } from "@car-tracker/drizzle";
-import { drizzleOrm } from "@car-tracker/drizzle";
-const { eq } = drizzleOrm;
-const { drizzle } = drizzleOrm_NodePostgres;
-import { userTable } from "@car-tracker/drizzle";
-import * as schema from "@car-tracker/drizzle";
-import dotenv from "dotenv";
+import type { CreateFastifyContextOptions } from "@trpc/server/adapters/fastify";
+// import { drizzleOrm_NodePostgres } from "@car-tracker/drizzle";
+// import { drizzleOrm } from "@car-tracker/drizzle";
+// const { eq } = drizzleOrm;
+// const { drizzle } = drizzleOrm_NodePostgres;
+// import { userTable } from "@car-tracker/drizzle";
+// import * as schema from "@car-tracker/drizzle";
+import * as dotenv from "dotenv";
 dotenv.config({ path: "../server.env" });
 // import { fromNodeHeaders } from "better-auth/node";
 
