@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRoute } from "@tanstack/react-router";
 import { Toaster } from "react-hot-toast";
 import AppLayout from "@/layout/AppLayout";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import { AsyncBoundary } from "@/components/AsyncBoundary";
 import { Providers } from "@/components/Providers";
 
 function RootComponent() {
@@ -12,9 +12,9 @@ function RootComponent() {
   return (
     <>
       <Providers>
-        <ErrorBoundary>
+        <AsyncBoundary>
           <AppLayout />
-        </ErrorBoundary>
+        </AsyncBoundary>
         {isDev && <ReactQueryDevtools initialIsOpen={false} position="left" buttonPosition="bottom-left" />}
       </Providers>
 

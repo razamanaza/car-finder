@@ -87,7 +87,7 @@ function fromTRPCClientError(error: TRPCClientError<AppRouter>): AppError {
     cause: error,
     code: code?.toString(),
     statusCode,
-    isRetryable: errorConfig?.retryable ?? false,
+    isRetryable: errorConfig?.retryable ?? true,
     userMessage: errorConfig?.message ?? error.message ?? ERROR_MESSAGES.GENERIC,
     severity: errorConfig?.severity ?? "error",
   });
@@ -116,24 +116,6 @@ function fromGenericError(error: unknown): AppError {
     userMessage: ERROR_MESSAGES.GENERIC,
     severity: "error",
   });
-}
-
-/**
- * Normalizes an unknown error into an `AppError` instance.
- * This function guarantees a consistent, typed error object to work with.
- * @param error The error to normalize, typically from a catch block.
- * @returns An instance of `AppError`.
- */
-export function normalizeError(error: unknown): AppError {
-  if (error instanceof TRPCClientError) {
-    return fromTRPCClientError(error);
-  }
-
-  if (error instanceof TypeError && error.message.toLowerCase().includes("fetch")) {
-    return fromFetchError(error);
-  }
-
-  return fromGenericError(error);
 }
 
 // --- Centralized Logging ---
@@ -177,6 +159,24 @@ function displayToast(error: AppError): void {
 }
 
 // --- Public Utility Functions ---
+
+/**
+ * Normalizes an unknown error into an `AppError` instance.
+ * This function guarantees a consistent, typed error object to work with.
+ * @param error The error to normalize, typically from a catch block.
+ * @returns An instance of `AppError`.
+ */
+export function normalizeError(error: unknown): AppError {
+  if (error instanceof TRPCClientError) {
+    return fromTRPCClientError(error);
+  }
+
+  if (error instanceof TypeError && error.message.toLowerCase().includes("fetch")) {
+    return fromFetchError(error);
+  }
+
+  return fromGenericError(error);
+}
 
 /**
  * Logs a normalized error, sends it to a centralized logging service, and optionally displays a toast.
