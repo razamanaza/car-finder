@@ -1,5 +1,5 @@
 {
-  "name": "@car-tracker/shared",
+  "name": "@car-finder/shared",
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
