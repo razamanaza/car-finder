@@ -15,7 +15,7 @@ function RootComponent() {
         <AsyncBoundary>
           <AppLayout />
         </AsyncBoundary>
-        {isDev && <ReactQueryDevtools initialIsOpen={false} position="left" buttonPosition="bottom-left" />}
+        {isDev && <ReactQueryDevtools initialIsOpen={false} position="bottom" buttonPosition="bottom-left" />}
       </Providers>
 
       <Toaster

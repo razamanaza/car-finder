@@ -36,7 +36,7 @@ const start = async () => {
       } as FastifyTRPCPluginOptions<AppRouter>["trpcOptions"],
     });
 
-    const port = Number(process.env.PORT) || 2022;
+    const port = Number(process.env.PORT) || 4100;
     await fastify.listen({
       port,
       host: "0.0.0.0",
