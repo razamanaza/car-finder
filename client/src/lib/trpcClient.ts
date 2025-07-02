@@ -1,12 +1,7 @@
 import { createTRPCClient, httpBatchLink, loggerLink } from "@trpc/client";
 import type { AppRouter } from "@server/routes";
 import { logError } from "./errorUtils";
-
-const backendUrl = import.meta.env.VITE_URL_BACKEND;
-
-if (!backendUrl) {
-  throw new Error("VITE_URL_BACKEND environment variable is not defined");
-}
+import { env } from "../env";
 
 export const trpc = createTRPCClient<AppRouter>({
   links: [
@@ -25,7 +20,7 @@ export const trpc = createTRPCClient<AppRouter>({
       },
     }),
     httpBatchLink({
-      url: `${backendUrl}/trpc`,
+      url: `${env.VITE_URL_BACKEND}/trpc`,
       fetch(url, options) {
         return fetch(url, {
           ...options,

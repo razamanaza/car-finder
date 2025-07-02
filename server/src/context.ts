@@ -1,24 +1,17 @@
 import type { CreateFastifyContextOptions } from "@trpc/server/adapters/fastify";
-// import { drizzleOrm_NodePostgres } from "@car-finder/drizzle";
-// import { drizzleOrm } from "@car-finder/drizzle";
-// const { eq } = drizzleOrm;
-// const { drizzle } = drizzleOrm_NodePostgres;
-// import { userTable } from "@car-finder/drizzle";
-// import * as schema from "@car-finder/drizzle";
-import * as dotenv from "dotenv";
-dotenv.config({ path: "../server.env" });
+import { drizzleOrm_NodePostgres } from "@car-finder/drizzle";
+import { drizzleOrm } from "@car-finder/drizzle";
+const { eq } = drizzleOrm;
+const { drizzle } = drizzleOrm_NodePostgres;
+import { userTable } from "@car-finder/drizzle";
+import * as schema from "@car-finder/drizzle";
+import { env } from "./env";
 // import { fromNodeHeaders } from "better-auth/node";
+// import { Auth } from "better-auth";
 
-// const databaseUrl = process.env.DATABASE_URL;
-
-// if (!databaseUrl) throw new Error("DATABASE_URL is not defined");
-// const config = { databaseUrl };
-// export const db = drizzle(databaseUrl, { schema });
-const test = {
-  hello: "world",
-};
-const user = undefined;
-
+const config = { databaseUrl: env.DATABASE_URL };
+export const db = drizzle(env.DATABASE_URL, { schema });
+// const auth = new Auth();
 const createContext = async ({ req, res }: CreateFastifyContextOptions) => {
   // const headers = fromNodeHeaders(req.headers);
   // const data = await auth.api.getSession({
@@ -35,7 +28,7 @@ const createContext = async ({ req, res }: CreateFastifyContextOptions) => {
   //     console.log("error", error);
   //   }
   // }
-  return { req, res, test, user };
+  return { req, res, user: undefined, db, config };
 };
 
 export default createContext;

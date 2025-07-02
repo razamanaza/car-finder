@@ -48,6 +48,7 @@ const TRPC_ERROR_MAP: Record<string, { message: string; retryable: boolean; seve
 // --- Custom Error Class ---
 
 interface AppErrorOptions {
+  source: string;
   message?: string;
   cause?: unknown;
   code?: string;
@@ -64,6 +65,7 @@ interface AppErrorOptions {
  * and other structured properties for logging and UI feedback.
  */
 export class AppError extends Error {
+  public readonly source: string;
   public readonly cause?: unknown;
   public readonly code?: string;
   public readonly statusCode?: number;
@@ -72,9 +74,9 @@ export class AppError extends Error {
   public readonly userMessage: string;
   public readonly severity: "error" | "warning";
 
-  constructor(options: AppErrorOptions = {}) {
+  constructor(options: AppErrorOptions) {
     super(options.message ?? "An unexpected error occurred.");
-    this.name = "AppError";
+    this.source = options.source;
     this.cause = options.cause;
     this.code = options.code;
     this.statusCode = options.statusCode;
@@ -100,6 +102,7 @@ function fromTRPCClientError(error: TRPCClientError<AppRouter>): AppError {
   const errorConfig = TRPC_ERROR_MAP[code];
 
   return new AppError({
+    source: "TRPC",
     message: error.message,
     cause: error,
     code: code?.toString(),
@@ -118,6 +121,7 @@ function fromGenericError(error: unknown): AppError {
 
   const message = error instanceof Error ? error.message : String(error);
   return new AppError({
+    source: "GENERIC",
     message,
     cause: error,
     userMessage: ERROR_MESSAGES.GENERIC,

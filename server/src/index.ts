@@ -3,9 +3,8 @@ import fastifyCors from "@fastify/cors";
 import Fastify, { FastifyReply, FastifyRequest } from "fastify";
 import { fastifyTRPCPlugin, FastifyTRPCPluginOptions } from "@trpc/server/adapters/fastify";
 import createContext from "./context";
-import dotenv from "dotenv";
 import { appRouter, AppRouter } from "./routes";
-dotenv.config({ path: "../server.env" });
+import { env } from "./env";
 
 const fastify = Fastify({
   maxParamLength: 5000,
@@ -16,7 +15,7 @@ const start = async () => {
   try {
     await fastify.register(fastifyCors, {
       credentials: true,
-      origin: process.env.CLIENT_URL,
+      origin: env.CLIENT_URL,
     });
 
     await fastify.register(fastifyCookie);
@@ -36,12 +35,11 @@ const start = async () => {
       } as FastifyTRPCPluginOptions<AppRouter>["trpcOptions"],
     });
 
-    const port = Number(process.env.PORT) || 4100;
     await fastify.listen({
-      port,
+      port: env.PORT,
       host: "0.0.0.0",
     });
-    console.log("Server is running on port " + port);
+    console.log("Server is running on port " + env.PORT);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
