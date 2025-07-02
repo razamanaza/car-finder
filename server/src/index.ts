@@ -2,9 +2,10 @@ import fastifyCookie from "@fastify/cookie";
 import fastifyCors from "@fastify/cors";
 import Fastify, { FastifyReply, FastifyRequest } from "fastify";
 import { fastifyTRPCPlugin, FastifyTRPCPluginOptions } from "@trpc/server/adapters/fastify";
-import createContext from "./context";
-import { appRouter, AppRouter } from "./routes";
-import { env } from "./env";
+import createContext from "@/context";
+import { appRouter, AppRouter } from "@/routes";
+import { env } from "@/env";
+import { authHandler } from "@/handlers/auth";
 
 const fastify = Fastify({
   maxParamLength: 5000,
@@ -19,6 +20,12 @@ const start = async () => {
     });
 
     await fastify.register(fastifyCookie);
+
+    fastify.route({
+      method: ["GET", "POST"],
+      url: "/api/auth/*",
+      handler: authHandler,
+    });
 
     fastify.get("/", async (_request: FastifyRequest, reply: FastifyReply) => {
       return reply.send({ message: "Hello world!" });

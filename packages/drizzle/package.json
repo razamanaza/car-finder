@@ -1,7 +1,6 @@
 {
   "name": "@car-finder/drizzle",
   "version": "0.0.1",
-  "main": "index.js",
   "scripts": {
     "build": "tsc",
     "push": "npx drizzle-kit push",
