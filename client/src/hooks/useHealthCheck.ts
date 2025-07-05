@@ -1,4 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
+
 import { useTRPC } from "@/lib/trpc";
 
 export function useHealthCheck() {

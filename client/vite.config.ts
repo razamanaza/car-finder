@@ -1,9 +1,9 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
+import react from "@vitejs/plugin-react";
 import dotenv from "dotenv";
 import path from "path";
+import { defineConfig } from "vite";
 dotenv.config({ path: "client.env" });
 
 export default defineConfig({

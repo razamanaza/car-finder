@@ -1,5 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { Outlet } from "@tanstack/react-router";
+
+import { Button } from "@/components/ui/button";
 
 const AppLayout = () => {
   return (

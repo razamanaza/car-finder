@@ -1,7 +1,8 @@
-import { createTRPCClient, httpBatchLink, loggerLink } from "@trpc/client";
 import type { AppRouter } from "@server/routes";
-import { logError } from "./errorUtils";
+import { createTRPCClient, httpBatchLink, loggerLink } from "@trpc/client";
+
 import { env } from "../env";
+import { logError } from "./errorUtils";
 
 export const trpc = createTRPCClient<AppRouter>({
   links: [

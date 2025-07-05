@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+
 import { AsyncBoundary } from "@/components/AsyncBoundary";
 import { useHealthCheck } from "@/hooks/useHealthCheck";
 

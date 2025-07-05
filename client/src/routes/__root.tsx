@@ -1,10 +1,11 @@
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRoute } from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "react-hot-toast";
-import AppLayout from "@/layout/AppLayout";
+
 import { AsyncBoundary } from "@/components/AsyncBoundary";
 import { Providers } from "@/components/Providers";
+import AppLayout from "@/layout/AppLayout";
 
 function RootComponent() {
   const isDev = import.meta.env.DEV;

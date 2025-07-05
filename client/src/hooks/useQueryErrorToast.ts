@@ -1,7 +1,8 @@
-import { useEffect } from "react";
-import { logError } from "@/lib/errorUtils";
-import type { TRPCClientErrorLike } from "@trpc/client";
 import type { AppRouter } from "@server/routes";
+import type { TRPCClientErrorLike } from "@trpc/client";
+import { useEffect } from "react";
+
+import { logError } from "@/lib/errorUtils";
 
 export function useQueryErrorToast(isError: boolean, error: TRPCClientErrorLike<AppRouter> | null) {
   useEffect(() => {

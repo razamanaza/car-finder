@@ -1,6 +1,7 @@
-import { Suspense } from "react";
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
+import { Suspense } from "react";
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
+
 import { logError, normalizeError } from "@/lib/errorUtils";
 
 function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
