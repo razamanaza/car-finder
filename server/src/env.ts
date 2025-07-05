@@ -1,4 +1,4 @@
-import { serverEnvSchema } from "@car-finder/shared/schemas/env";
+import { serverEnvSchema } from "@car-finder/shared";
 import { config } from "dotenv";
 config({ path: "../server.env" });
 
