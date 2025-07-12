@@ -5,7 +5,6 @@ export async function authHandler(request: FastifyRequest, reply: FastifyReply) 
   try {
     // Construct request URL
     const url = new URL(request.url, `http://${request.headers.host}`);
-    console.log({ url });
 
     // Convert Fastify headers to standard Headers object
     const headers = new Headers();

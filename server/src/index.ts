@@ -9,7 +9,7 @@ import { authHandler } from "@/handlers/auth";
 
 const fastify = Fastify({
   maxParamLength: 5000,
-  logger: true,
+  // logger: true,
 });
 
 const start = async () => {
